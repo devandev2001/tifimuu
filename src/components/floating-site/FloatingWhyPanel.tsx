@@ -38,7 +38,8 @@ export function FloatingWhyPanel({ isActive }: { isActive: boolean }) {
     <article
       aria-hidden={!isActive}
       aria-labelledby="why-heading"
-      className="relative flex h-full min-h-0 w-full flex-col overflow-y-auto pb-14"
+      data-panel-scroll
+      className="relative flex h-full min-h-0 w-full flex-col overflow-y-auto overscroll-y-contain pb-14"
     >
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 pt-4 sm:px-6 sm:pt-6 lg:gap-5">
         <motion.div

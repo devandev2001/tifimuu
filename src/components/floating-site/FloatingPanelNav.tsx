@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { useFloatingSite } from "./FloatingSiteProvider";
@@ -7,6 +8,12 @@ import { useFloatingSite } from "./FloatingSiteProvider";
 export function FloatingPanelNav() {
   const { index, count, goTo, next, prev, panels } = useFloatingSite();
   const reducedMotion = useReducedMotion();
+  const [showScrollCue, setShowScrollCue] = useState(false);
+
+  useEffect(() => {
+    // Defer cue until after hydration so reduced-motion preference matches.
+    setShowScrollCue(index === 0 && !reducedMotion);
+  }, [index, reducedMotion]);
 
   return (
     <>
@@ -63,7 +70,7 @@ export function FloatingPanelNav() {
         </button>
       </div>
 
-      {index === 0 && !reducedMotion ? (
+      {showScrollCue ? (
         <motion.p
           aria-hidden="true"
           className="pointer-events-none absolute bottom-20 left-1/2 z-20 hidden -translate-x-1/2 text-xs font-bold tracking-[0.18em] text-olive/70 uppercase sm:block"

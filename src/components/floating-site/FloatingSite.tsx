@@ -2,6 +2,10 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import {
+  getPanelScrollState,
+  shouldNavigateFromScrollGesture,
+} from "@/lib/floating-panel-scroll";
 import { motionDurations } from "@/lib/motion";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { FloatingPanel } from "./FloatingPanel";
@@ -14,17 +18,14 @@ import { useFloatingSite } from "./FloatingSiteProvider";
 
 /**
  * Full-viewport floating landing — visual panels with Framer enter motion.
+ * Wheel/swipe changes panels; content-heavy panels scroll first, then advance.
  */
 export function FloatingSite() {
-  const { index, next, prev, goTo, panels, panelId } = useFloatingSite();
+  const { index, next, prev, goTo, panels } = useFloatingSite();
   const reducedMotion = useReducedMotion();
   const lockRef = useRef(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const touchStartY = useRef<number | null>(null);
-  const allowWheelNav =
-    panelId !== "menu" &&
-    panelId !== "plans" &&
-    panelId !== "why" &&
-    panelId !== "story";
 
   const withLock = useCallback((action: () => void) => {
     if (lockRef.current) return;
@@ -68,8 +69,18 @@ export function FloatingSite() {
 
   useEffect(() => {
     const onWheel = (event: WheelEvent) => {
-      if (!allowWheelNav) return;
-      if (Math.abs(event.deltaY) < 18) return;
+      if (Math.abs(event.deltaY) < 8) return;
+
+      const scrollState = getPanelScrollState(sectionRef.current);
+      if (!shouldNavigateFromScrollGesture(scrollState, event.deltaY)) {
+        // Drive the panel scroller directly so wheel works anywhere in the slide.
+        if (scrollState.element) {
+          event.preventDefault();
+          scrollState.element.scrollTop += event.deltaY;
+        }
+        return;
+      }
+
       event.preventDefault();
       if (event.deltaY > 0) withLock(next);
       else withLock(prev);
@@ -77,14 +88,13 @@ export function FloatingSite() {
 
     window.addEventListener("wheel", onWheel, { passive: false });
     return () => window.removeEventListener("wheel", onWheel);
-  }, [allowWheelNav, next, prev, withLock]);
+  }, [next, prev, withLock]);
 
   const onTouchStart = (event: React.TouchEvent) => {
     touchStartY.current = event.touches[0]?.clientY ?? null;
   };
 
   const onTouchEnd = (event: React.TouchEvent) => {
-    if (!allowWheelNav) return;
     const start = touchStartY.current;
     touchStartY.current = null;
     if (start == null) return;
@@ -92,6 +102,12 @@ export function FloatingSite() {
     if (end == null) return;
     const delta = start - end;
     if (Math.abs(delta) < 56) return;
+
+    const scrollState = getPanelScrollState(sectionRef.current);
+    if (!shouldNavigateFromScrollGesture(scrollState, delta)) {
+      return;
+    }
+
     if (delta > 0) withLock(next);
     else withLock(prev);
   };
@@ -101,6 +117,7 @@ export function FloatingSite() {
 
   return (
     <section
+      ref={sectionRef}
       aria-roledescription="carousel"
       aria-label="Tiffimu floating landing"
       className="floating-site relative h-[calc(100svh-4.5rem)] overflow-hidden bg-pistachio"

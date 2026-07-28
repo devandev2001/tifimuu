@@ -55,7 +55,8 @@ export function FloatingPlansPanel({ isActive }: { isActive: boolean }) {
     <article
       aria-hidden={!isActive}
       aria-labelledby="floating-plans-heading"
-      className="relative flex h-full min-h-0 w-full flex-col pb-14"
+      data-panel-scroll
+      className="relative flex h-full min-h-0 w-full flex-col overflow-y-auto overscroll-y-contain pb-14"
     >
       <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col gap-4 px-4 pt-4 sm:px-6 sm:pt-6">
         <div className="flex items-end justify-between gap-3">

@@ -35,7 +35,8 @@ export function FloatingStoryPanel({ isActive }: { isActive: boolean }) {
     <article
       aria-hidden={!isActive}
       aria-labelledby="story-heading"
-      className="relative flex h-full min-h-0 w-full flex-col overflow-y-auto pb-14"
+      data-panel-scroll
+      className="relative flex h-full min-h-0 w-full flex-col overflow-y-auto overscroll-y-contain pb-14"
     >
       <div className="relative mx-auto w-full max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6">
         <motion.div

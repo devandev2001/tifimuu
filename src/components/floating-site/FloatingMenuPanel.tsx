@@ -32,14 +32,21 @@ function dishesForDay(day: DayMenu, preference: MenuPreference): string[] {
   return items;
 }
 
+const PREFERENCE_OPTIONS = [
+  { id: "veg" as const, label: "Veg" },
+  { id: "non-veg" as const, label: "Non-veg" },
+  { id: "both" as const, label: "Both" },
+];
+
 /**
  * Visual menu — pick a day by its plate photo, then order.
+ * Photo-first stage with a filmstrip day picker and typographic dish list.
  */
 export function FloatingMenuPanel({ isActive }: { isActive: boolean }) {
   const { content } = useSiteContent();
   const { goToId } = useFloatingSite();
   const reducedMotion = useReducedMotion();
-  const todayId = getKuwaitMenuDayId();
+  const [todayId, setTodayId] = useState<string | null>(null);
   const [preference, setPreference] = useState<MenuPreference>("both");
   const [showSaturday, setShowSaturday] = useState(true);
 
@@ -51,12 +58,13 @@ export function FloatingMenuPanel({ isActive }: { isActive: boolean }) {
     [content.menu, showSaturday],
   );
 
-  const initialDayId =
-    (todayId && days.some((day) => day.id === todayId) && todayId) ||
-    days[0]?.id ||
-    "monday";
+  const [selectedId, setSelectedId] = useState(days[0]?.id ?? "monday");
 
-  const [selectedId, setSelectedId] = useState(initialDayId);
+  useEffect(() => {
+    const id = getKuwaitMenuDayId();
+    setTodayId(id);
+    if (id) setSelectedId(id);
+  }, []);
 
   useEffect(() => {
     if (!days.some((day) => day.id === selectedId) && days[0]) {
@@ -93,197 +101,244 @@ export function FloatingMenuPanel({ isActive }: { isActive: boolean }) {
     <article
       aria-hidden={!isActive}
       aria-labelledby="floating-menu-heading"
-      className="relative flex h-full min-h-0 w-full flex-col pb-14"
+      data-panel-scroll
+      className="relative flex h-full min-h-0 w-full flex-col overflow-y-auto overscroll-y-contain pb-14"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(250,246,234,0.9),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_42%_18%,rgba(250,246,234,0.92)_0%,transparent_52%),radial-gradient(ellipse_at_88%_72%,rgba(204,234,148,0.35)_0%,transparent_45%)]"
       />
 
-      <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col gap-3 px-4 pt-3 sm:gap-4 sm:px-6 sm:pt-5 lg:gap-5">
-        <div className="flex items-center justify-between gap-3">
-          <h2
-            id="floating-menu-heading"
-            className="font-display text-2xl font-extrabold tracking-tight text-forest sm:text-3xl lg:text-4xl"
-          >
-            Menu
-          </h2>
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 pt-3 sm:gap-5 sm:px-6 sm:pt-5">
+        <header className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-[0.65rem] font-extrabold tracking-[0.2em] text-olive uppercase">
+              This week
+            </p>
+            <h2
+              id="floating-menu-heading"
+              className="font-display text-[clamp(2rem,6vw,3.5rem)] leading-none font-extrabold tracking-tight text-forest"
+            >
+              Menu
+            </h2>
+          </div>
           <div
             role="group"
             aria-label="Meal preference"
-            className="inline-flex rounded-full bg-cream/90 p-1 shadow-sm"
+            className="inline-flex gap-1 rounded-2xl bg-forest/8 p-1"
           >
-            {(["veg", "non-veg", "both"] as const).map((option) => (
+            {PREFERENCE_OPTIONS.map((option) => (
               <button
-                key={option}
+                key={option.id}
                 type="button"
-                aria-pressed={preference === option}
-                onClick={() => setPreference(option)}
-                className={`min-h-9 rounded-full px-3 text-xs font-extrabold capitalize sm:min-h-10 sm:px-3.5 sm:text-sm ${
-                  preference === option
+                aria-pressed={preference === option.id}
+                onClick={() => setPreference(option.id)}
+                className={`min-h-10 rounded-xl px-3.5 text-sm font-extrabold transition-colors ${
+                  preference === option.id
                     ? "bg-forest text-pistachio"
-                    : "text-forest hover:bg-white"
+                    : "text-forest hover:bg-cream/80"
                 }`}
               >
-                {option === "both" ? "Both" : option === "non-veg" ? "Non-veg" : "Veg"}
+                {option.label}
               </button>
             ))}
           </div>
-        </div>
+        </header>
 
-        {/* Photo day picker — selection by image */}
-        <div
-          role="listbox"
-          aria-label="Choose a day"
-          className="flex gap-2.5 overflow-x-auto pb-1 pt-0.5 [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-3 [&::-webkit-scrollbar]:hidden"
-        >
-          {days.map((day, index) => {
-            const active = day.id === selected.id;
-            const isToday = day.id === todayId;
-            return (
-              <motion.button
-                key={day.id}
-                type="button"
-                role="option"
-                aria-selected={active}
-                aria-label={`${day.label}${isToday ? ", today" : ""}`}
-                onClick={() => setSelectedId(day.id)}
-                initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+        <div className="grid min-h-0 gap-4 lg:grid-cols-[1.35fr_0.9fr] lg:items-start lg:gap-7">
+          {/* Plate stage */}
+          <div className="flex flex-col gap-3">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selected.id}
+                initial={reducedMotion ? false : { opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ ...motionSprings.soft, delay: index * 0.04 }}
-                whileHover={reducedMotion ? undefined : { y: -5 }}
-                whileTap={reducedMotion ? undefined : { scale: 0.97 }}
-                className={`group relative w-[4.75rem] shrink-0 text-left sm:w-24 ${
-                  active ? "z-10" : ""
-                }`}
+                exit={reducedMotion ? undefined : { opacity: 0, y: -12 }}
+                transition={motionSprings.soft}
+                className="relative isolate min-h-[38svh] overflow-hidden rounded-[2rem] sm:min-h-[46svh] lg:min-h-[min(58svh,32rem)]"
               >
-                <span
-                  className={`relative block aspect-square overflow-hidden rounded-2xl border-2 transition-[border-color,transform,box-shadow] duration-(--motion-duration-fast) ${
-                    active
-                      ? "border-forest shadow-lg shadow-forest/25 ring-2 ring-forest/20"
-                      : "border-white/80 hover:border-forest/30"
-                  }`}
-                >
-                  {day.mealImage ? (
-                    <Image
-                      src={day.mealImage}
-                      alt=""
-                      fill
-                      sizes="96px"
-                      className="object-cover transition-transform duration-(--motion-duration-slow) group-hover:scale-105"
-                    />
-                  ) : (
-                    <span className="absolute inset-0 bg-mint" />
-                  )}
-                  {isToday ? (
-                    <span className="absolute top-1.5 left-1.5 size-2 rounded-full bg-lime ring-2 ring-forest" />
-                  ) : null}
-                </span>
-                <span
-                  className={`mt-1.5 block text-center font-display text-sm font-extrabold ${
-                    active ? "text-forest" : "text-olive"
-                  }`}
-                >
-                  {day.short}
-                </span>
-              </motion.button>
-            );
-          })}
-          <label className="ml-1 flex w-16 shrink-0 flex-col items-center justify-center gap-1 self-start pt-1 text-center sm:w-20">
-            <span className="flex size-[4.75rem] items-center justify-center rounded-2xl border border-dashed border-forest/25 bg-cream/60 sm:size-24">
-              <input
-                type="checkbox"
-                checked={showSaturday}
-                onChange={(event) => setShowSaturday(event.target.checked)}
-                className="size-4 accent-forest"
-                aria-label="Include Saturday"
-              />
-            </span>
-            <span className="font-display text-xs font-bold text-olive">Sat</span>
-          </label>
-        </div>
-
-        {/* Selected plate — visual stage */}
-        <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 lg:grid-cols-[1.15fr_0.85fr] lg:items-stretch lg:gap-6">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selected.id}
-              initial={reducedMotion ? false : { opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={reducedMotion ? undefined : { opacity: 0, scale: 0.98 }}
-              transition={motionSprings.soft}
-              className="relative min-h-[34svh] overflow-hidden rounded-[1.75rem] sm:min-h-[42svh] lg:min-h-0"
-            >
-              {selected.mealImage ? (
-                <Image
-                  src={selected.mealImage}
-                  alt={`${selected.label} meal`}
-                  fill
-                  priority={isActive}
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover"
+                {selected.mealImage ? (
+                  <Image
+                    src={selected.mealImage}
+                    alt={`${selected.label} meal`}
+                    fill
+                    priority={isActive}
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-mint" />
+                )}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-[linear-gradient(180deg,rgba(30,52,25,0.12)_0%,transparent_28%,transparent_48%,rgba(30,52,25,0.78)_100%)]"
                 />
-              ) : (
-                <div className="absolute inset-0 bg-mint" />
-              )}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-linear-to-t from-forest-deep/80 via-forest-deep/15 to-transparent"
-              />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 sm:p-5">
-                <div>
-                  <p className="font-display text-3xl font-extrabold text-cream sm:text-4xl">
-                    {selected.label}
-                  </p>
-                  {selected.id === todayId ? (
-                    <p className="mt-1 text-xs font-extrabold tracking-[0.14em] text-lime uppercase">
-                      Today&apos;s plate
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 sm:p-6">
+                  <div>
+                    <p className="font-display text-4xl font-extrabold tracking-tight text-cream sm:text-5xl">
+                      {selected.label}
                     </p>
+                    {selected.id === todayId ? (
+                      <p className="mt-1.5 inline-flex items-center gap-2 text-xs font-extrabold tracking-[0.16em] text-lime uppercase">
+                        <span
+                          aria-hidden="true"
+                          className="size-1.5 rounded-full bg-lime"
+                        />
+                        Today&apos;s plate
+                      </p>
+                    ) : (
+                      <p className="mt-1.5 text-sm font-semibold text-cream/75">
+                        Tap a day below to switch
+                      </p>
+                    )}
+                  </div>
+                  {selected.dessert && selected.dessertImage ? (
+                    <div className="relative size-[4.5rem] shrink-0 overflow-hidden rounded-[1.25rem] border-[3px] border-cream/90 shadow-[0_12px_28px_rgba(30,52,25,0.35)] sm:size-24">
+                      <Image
+                        src={selected.dessertImage}
+                        alt={selected.dessert}
+                        fill
+                        sizes="96px"
+                        className="object-cover"
+                      />
+                    </div>
                   ) : null}
                 </div>
-                {selected.dessert && selected.dessertImage ? (
-                  <div className="relative size-16 shrink-0 overflow-hidden rounded-2xl border-2 border-cream/80 shadow-lg sm:size-20">
-                    <Image
-                      src={selected.dessertImage}
-                      alt={selected.dessert}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
-                  </div>
-                ) : null}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
 
-          <div className="flex flex-col justify-between gap-3 rounded-[1.75rem] bg-cream/75 p-4 backdrop-blur-sm sm:p-5">
+            {/* Day filmstrip — selection by photo */}
+            <div
+              role="listbox"
+              aria-label="Choose a day"
+              className="flex gap-2.5 overflow-x-auto pb-1 pt-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-3 [&::-webkit-scrollbar]:hidden"
+            >
+              {days.map((day, index) => {
+                const active = day.id === selected.id;
+                const isToday = day.id === todayId;
+                return (
+                  <motion.button
+                    key={day.id}
+                    type="button"
+                    role="option"
+                    aria-selected={active}
+                    aria-label={`${day.label}${isToday ? ", today" : ""}`}
+                    onClick={() => setSelectedId(day.id)}
+                    initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ ...motionSprings.soft, delay: index * 0.035 }}
+                    whileHover={reducedMotion ? undefined : { y: -6 }}
+                    whileTap={reducedMotion ? undefined : { scale: 0.97 }}
+                    className="group relative w-[4.6rem] shrink-0 text-left sm:w-[5.25rem]"
+                  >
+                    <span
+                      className={`relative block aspect-[4/5] overflow-hidden rounded-[1.15rem] transition-[box-shadow,transform] duration-(--motion-duration-fast) ${
+                        active
+                          ? "shadow-[0_10px_24px_rgba(44,74,39,0.35)] ring-2 ring-forest ring-offset-2 ring-offset-pistachio"
+                          : "ring-1 ring-forest/15 hover:ring-forest/35"
+                      }`}
+                      style={{
+                        transform: active
+                          ? "rotate(0deg)"
+                          : `rotate(${index % 2 === 0 ? -2.5 : 2.5}deg)`,
+                      }}
+                    >
+                      {day.mealImage ? (
+                        <Image
+                          src={day.mealImage}
+                          alt=""
+                          fill
+                          sizes="84px"
+                          className="object-cover transition-transform duration-(--motion-duration-slow) group-hover:scale-105"
+                        />
+                      ) : (
+                        <span className="absolute inset-0 bg-mint" />
+                      )}
+                      <span className="absolute inset-0 bg-linear-to-t from-forest-deep/70 via-transparent to-transparent" />
+                      {isToday ? (
+                        <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-lime ring-2 ring-forest-deep" />
+                      ) : null}
+                      <span className="absolute inset-x-0 bottom-0 p-1.5 text-center font-display text-xs font-extrabold text-cream sm:text-sm">
+                        {day.short}
+                      </span>
+                    </span>
+                  </motion.button>
+                );
+              })}
+              <label className="ml-0.5 flex w-[4.6rem] shrink-0 flex-col items-center justify-center gap-1 self-center text-center sm:w-[5.25rem]">
+                <span className="flex aspect-[4/5] w-full items-center justify-center rounded-[1.15rem] border border-dashed border-forest/30 bg-cream/55">
+                  <input
+                    type="checkbox"
+                    checked={showSaturday}
+                    onChange={(event) => setShowSaturday(event.target.checked)}
+                    className="size-4 accent-forest"
+                    aria-label="Include Saturday"
+                  />
+                </span>
+                <span className="font-display text-xs font-bold text-olive">
+                  Sat
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {/* Dish details + order */}
+          <motion.div
+            key={`${selected.id}-${preference}`}
+            initial={reducedMotion ? false : { opacity: 0, x: 16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={motionSprings.soft}
+            className="flex flex-col justify-between gap-5 border-t border-forest/15 pt-4 lg:min-h-[min(58svh,32rem)] lg:border-t-0 lg:border-l lg:pt-0 lg:pl-7"
+          >
             <div>
               <p className="text-[0.65rem] font-extrabold tracking-[0.18em] text-olive uppercase">
                 On the plate
               </p>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {dishes.map((dish) => (
+              <ul className="mt-3 space-y-2.5">
+                {dishes.map((dish, index) => (
                   <li
                     key={dish}
-                    className="rounded-full bg-white px-3 py-2 text-sm font-bold text-forest shadow-sm"
+                    className="flex items-baseline gap-3 border-b border-forest/10 pb-2.5 last:border-b-0"
                   >
-                    {dish}
+                    <span
+                      aria-hidden="true"
+                      className="font-display text-sm font-extrabold text-olive/55"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-display text-lg font-extrabold text-forest sm:text-xl">
+                      {dish}
+                    </span>
                   </li>
                 ))}
               </ul>
+
               {selected.dessert ? (
-                <p className="mt-4 flex flex-col gap-0.5">
-                  <span className="text-xs font-extrabold tracking-[0.14em] text-olive uppercase">
-                    Sweet
-                  </span>
-                  <span className="font-display text-lg font-extrabold text-forest">
-                    {selected.dessert}
-                  </span>
-                </p>
+                <div className="mt-5 flex items-center gap-3 rounded-2xl bg-cream/70 px-3 py-3">
+                  {selected.dessertImage ? (
+                    <span className="relative size-12 shrink-0 overflow-hidden rounded-xl">
+                      <Image
+                        src={selected.dessertImage}
+                        alt=""
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
+                    </span>
+                  ) : null}
+                  <p className="flex flex-col">
+                    <span className="text-[0.65rem] font-extrabold tracking-[0.14em] text-olive uppercase">
+                      Sweet finish
+                    </span>
+                    <span className="font-display text-lg font-extrabold text-forest">
+                      {selected.dessert}
+                    </span>
+                  </p>
+                </div>
               ) : null}
             </div>
 
-            <div className="flex flex-wrap gap-2.5 pt-2">
+            <div className="flex flex-wrap gap-2.5">
               <Magnetic strength={12}>
                 <WhatsAppCta
                   message={orderMessage}
@@ -295,12 +350,12 @@ export function FloatingMenuPanel({ isActive }: { isActive: boolean }) {
               <button
                 type="button"
                 onClick={() => goToId("plans")}
-                className="inline-flex min-h-12 items-center rounded-full border border-forest/20 bg-white/80 px-4 font-display text-base font-bold text-forest hover:bg-white"
+                className="inline-flex min-h-12 items-center rounded-full border border-forest/20 bg-cream/80 px-4 font-display text-base font-bold text-forest hover:bg-white"
               >
-                Plans
+                See plans
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </article>
