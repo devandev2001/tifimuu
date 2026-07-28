@@ -1,0 +1,23 @@
+---
+description: Frontend, component, page, responsive layout, UI, UX, design system, form, accessibility, and browser interaction requirements
+alwaysApply: false
+---
+
+# Frontend, UI, and UX
+
+- Inspect the existing product, components, styles, tokens, assets, and content before designing. Preserve an established design language unless redesign is requested.
+- Establish or reuse semantic design tokens for color, typography, spacing, radius, elevation, and motion. Do not scatter arbitrary hex colors or one-off pixel values.
+- Design mobile-first and progressively enhance for larger screens. Prevent horizontal overflow and support zoom, text wrapping, long content, and touch input.
+- Use semantic HTML and native controls before custom widgets. Every interaction must work by keyboard and expose a meaningful accessible name.
+- Target WCAG 2.2 AA: logical headings, labels and instructions, visible focus, sufficient contrast, non-color status cues, error identification, and appropriate ARIA only when native semantics are insufficient.
+- Keep touch targets comfortably usable, normally at least 44 by 44 CSS pixels where practical.
+- Provide intentional loading, skeleton, empty, error, offline/retry, success, disabled, hover, active, focus, and validation states where the feature can enter them.
+- Preserve user input on recoverable errors. Put validation messages next to the relevant fields and provide a useful summary for complex forms.
+- Keep critical actions clear and visually prioritized. Require confirmation for destructive actions and explain the consequence.
+- Use realistic content. Check long names, localized text, large numbers, missing images, and empty datasets rather than designing only for ideal content.
+- Avoid generic AI styling: unnecessary purple gradients, excessive rounded cards, uniform card grids, decorative glass effects, excessive shadows, and animation without purpose.
+- Reuse established components and patterns. Do not create custom buttons, dialogs, dropdowns, form controls, or icons when the design system already supplies them.
+- Separate data fetching and business logic from presentational components. Keep local UI state local and use URL state for shareable filters, search, sorting, and pagination.
+- Optimize images, fonts, and client bundles. Avoid avoidable layout shifts and unnecessary client-side rendering.
+- Verify the running UI in a real browser at mobile, tablet, desktop, and wide widths. Check keyboard navigation, focus order, console output, network failures, and the accessibility tree.
+

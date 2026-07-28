@@ -1,0 +1,4 @@
+interface:
+  display_name: "Three Scene Setup"
+  short_description: "Scaffold safe Next.js React Three Fiber scenes"
+  default_prompt: "Use $three-scene-setup to scaffold a responsive React Three Fiber scene for this Next.js project."

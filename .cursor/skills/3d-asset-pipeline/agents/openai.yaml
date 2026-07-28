@@ -1,0 +1,4 @@
+interface:
+  display_name: "3D Asset Pipeline"
+  short_description: "Optimize and deliver production-ready 3D assets"
+  default_prompt: "Use $3d-asset-pipeline to validate, optimize, and integrate these 3D assets for the web."

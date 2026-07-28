@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reduced Motion A11y"
+  short_description: "Build motion with WCAG and reduced-motion support"
+  default_prompt: "Use $reduced-motion-a11y to make this animated component accessible and safe for reduced-motion users."

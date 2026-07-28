@@ -1,0 +1,4 @@
+interface:
+  display_name: "3D Performance Audit"
+  short_description: "Profile and optimize browser-based 3D scenes"
+  default_prompt: "Use $perf-audit-3d to profile this 3D experience and fix evidence-backed performance bottlenecks."

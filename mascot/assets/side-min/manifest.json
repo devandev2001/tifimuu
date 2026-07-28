@@ -1,0 +1,66 @@
+{
+  "assembly_canvas": {
+    "width": 452,
+    "height": 900
+  },
+  "parts": {
+    "torso": {
+      "name": "torso",
+      "file": "torso.png",
+      "zOrder": 40,
+      "position": [
+        192.5,
+        330.0
+      ],
+      "size": [
+        227,
+        332
+      ],
+      "bbox": [
+        79,
+        164,
+        306,
+        496
+      ],
+      "source_bbox_in_char_crop": [
+        79,
+        164,
+        306,
+        496
+      ],
+      "pivot": [
+        185,
+        300
+      ]
+    },
+    "head": {
+      "name": "head",
+      "file": "head.png",
+      "zOrder": 50,
+      "position": [
+        215,
+        113
+      ],
+      "size": [
+        202,
+        216
+      ],
+      "bbox": [
+        114,
+        0,
+        316,
+        216
+      ],
+      "source_bbox_in_char_crop": [
+        114,
+        0,
+        316,
+        216
+      ],
+      "pivot": [
+        215,
+        175
+      ]
+    }
+  }
+}

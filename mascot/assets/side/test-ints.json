@@ -1,0 +1,27 @@
+{
+  "assembly_canvas": {
+    "width": 452,
+    "height": 900
+  },
+  "parts": {
+    "torso": {
+      "name": "torso",
+      "zOrder": 40,
+      "position": [
+        193,
+        330
+      ],
+      "size": [
+        227,
+        332
+      ],
+      "source_bbox_in_char_crop": [
+        79,
+        164,
+        306,
+        496
+      ],
+      "png_preview": "torso.png"
+    }
+  }
+}

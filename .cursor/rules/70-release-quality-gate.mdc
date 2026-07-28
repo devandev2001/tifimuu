@@ -1,0 +1,22 @@
+---
+description: Final review, release readiness, deployment preparation, production readiness, and completion quality gate
+alwaysApply: false
+---
+
+# Release quality gate
+
+Before calling a feature complete or preparing a release:
+
+1. Compare the implementation with the requested behavior and list every acceptance criterion.
+2. Review the complete diff for accidental edits, generated files, secrets, debug logs, placeholders, disabled checks, dead code, duplication, and unnecessary dependencies.
+3. Run the repository's formatter, linter, type checker, focused tests, full relevant test suite, and production build.
+4. Run dependency vulnerability and secret checks when configured. Resolve or explicitly document reachable critical/high findings before release.
+5. Exercise critical user journeys end to end in a real browser, including authentication and authorization boundaries where applicable.
+6. Verify mobile, tablet, desktop, keyboard-only use, visible focus, reduced motion, loading, empty, error, retry, and destructive-action states.
+7. Inspect browser console and network activity. Production-ready paths must not contain unexplained errors, failed requests, or noisy warnings.
+8. Measure performance when the change can affect it. Investigate regressions in loading, interaction responsiveness, layout stability, bundle size, query count, or memory use.
+9. Confirm database migrations, environment variables, external services, monitoring, logging, backup, rollback, and recovery requirements.
+10. Perform a five-axis review: correctness, readability/simplicity, architecture, security/privacy, and performance.
+11. Do not deploy to production without explicit user approval.
+12. Report the exact verification evidence and any remaining limitations. If a gate did not pass or could not run, the work is not fully verified.
+

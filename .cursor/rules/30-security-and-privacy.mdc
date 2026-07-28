@@ -1,0 +1,27 @@
+---
+description: Security, privacy, authentication, authorization, user input, API, database, file upload, payment, webhook, secret, and external integration requirements
+alwaysApply: false
+---
+
+# Security and privacy
+
+- Treat browser data, user input, URL parameters, cookies, files, webhooks, third-party responses, database content, and AI/model output as untrusted at the boundary.
+- For security-sensitive features, first identify trust boundaries, protected assets, abuse cases, and the least privileges required.
+- Validate and normalize external input with an explicit schema on the server. Client-side validation is for UX and is never a security boundary.
+- Authenticate protected requests and separately authorize every action against the specific resource. Never rely on hidden UI controls as authorization.
+- Prefer a mature authentication provider or framework integration. Do not invent authentication, session, encryption, password hashing, or token formats.
+- Keep secrets in environment or secret-management systems. Never place secrets in source code, client bundles, logs, screenshots, prompts, URLs, or committed `.env` files.
+- Prefer secure, `httpOnly`, appropriately scoped, `SameSite` cookies for browser sessions. Do not store sensitive bearer tokens in `localStorage`.
+- Use parameterized queries or a safe ORM. Never concatenate untrusted values into SQL, shell commands, HTML, file paths, redirects, or executable code.
+- Use framework output escaping. Do not use `eval`, unsafe dynamic execution, or raw HTML rendering with untrusted content.
+- Configure restrictive CORS, CSRF protection where cookie authentication is used, CSP and other security headers, HTTPS, request size limits, timeouts, and rate limits.
+- Apply stricter rate limits and abuse protection to login, password reset, verification, search, upload, payment, and expensive AI endpoints.
+- For file uploads, enforce allowlisted types, size limits, safe generated names, storage isolation, and content or magic-byte checks when relevant.
+- For server-side URL fetching, allowlist protocols and hosts, reject private/reserved addresses and redirects, and defend against DNS rebinding for high-risk features.
+- Minimize personal data collection and retention. Avoid sensitive data in logs, analytics, and error reports. Return only allowlisted public fields from APIs.
+- Use transactions for related writes that must succeed or fail together. Make payments, webhooks, retries, and externally repeated mutations idempotent.
+- Do not expose stack traces, database errors, secret values, or internal implementation details to users. Log a safe correlation identifier for diagnosis.
+- Before adding or upgrading a dependency, inspect its source/reputation, maintenance, license, install scripts, lockfile change, and known vulnerabilities.
+- Before release, run the detected package manager's security audit and secret scanning when available. Triage findings by severity, reachability, and fix risk; never apply a forced breaking audit fix blindly.
+- Require explicit user approval before changing authentication, permissions, CORS, sensitive-data storage, file uploads, payment behavior, or production security configuration.
+

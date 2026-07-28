@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ]
+    },
+    "rivemcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "rivemcp"
+      ]
+    }
+  }
+}

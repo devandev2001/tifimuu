@@ -1,0 +1,21 @@
+---
+globs: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.vue,**/*.svelte,**/*.py,**/*.go,**/*.java,**/*.kt,**/*.rb,**/*.php,**/*.css,**/*.scss,**/*.html,**/*.sql"
+alwaysApply: false
+---
+
+# Code quality and maintainability
+
+- Write the simplest code that clearly satisfies the current requirement. Do not add speculative abstractions, compatibility layers, generic frameworks, or features that were not requested.
+- Follow the existing project structure and naming conventions. Introduce a new architectural pattern only when the existing one cannot satisfy the requirement, and explain why.
+- Keep functions and modules focused. Separate UI rendering, orchestration, business rules, data access, and external integrations.
+- Prefer composition and explicit data flow over large configurable components, deep inheritance, global mutable state, and prop drilling.
+- Use descriptive domain names. Avoid vague names such as `data`, `temp`, `result`, `item`, or `handler` when a precise name is available.
+- Keep types explicit at public boundaries. Avoid `any`, unsafe casts, non-null assertions, and silent fallbacks unless the reason is documented and verified.
+- Handle expected failure paths explicitly. Never use empty `catch` blocks or swallow errors.
+- Remove unused imports, variables, debug logs, commented-out code, obsolete compatibility shims, duplicate helpers, and dead code introduced by the change.
+- Do not leave `TODO`, placeholder text, fake data, or unfinished branches unless the user explicitly requests a prototype; list any intentional placeholders in the final report.
+- Reuse an existing component or helper when it is the canonical implementation. Do not create a near-duplicate merely to avoid understanding existing code.
+- Avoid files that accumulate unrelated responsibilities. Treat UI components over about 200 lines and source files approaching 800–1000 lines as inspection signals; split by responsibility when it improves clarity.
+- Add a dependency only after confirming the platform, standard library, or existing dependencies do not already solve the problem. Check maintenance, license, security, and bundle/runtime cost.
+- Never hand-edit generated output, build artifacts, vendored dependencies, or lockfiles. Use the owning tool.
+- Run the project formatter, linter, type checker, relevant tests, and production build when those tools exist.

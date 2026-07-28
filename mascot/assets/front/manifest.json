@@ -1,0 +1,32 @@
+{
+  "artboard": "Front",
+  "assembly_canvas": {
+    "width": 301,
+    "height": 639
+  },
+  "parts": [
+    {
+      "name": "body_front",
+      "file": "body_front.png",
+      "zOrder": 40,
+      "bbox": [
+        0,
+        0,
+        301,
+        639
+      ],
+      "position": [
+        150.5,
+        319.5
+      ],
+      "size": [
+        301,
+        639
+      ],
+      "pivot": [
+        150.5,
+        351.45000000000005
+      ]
+    }
+  ]
+}

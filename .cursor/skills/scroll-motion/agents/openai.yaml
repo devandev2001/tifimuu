@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scroll Motion"
+  short_description: "Build and clean up responsive scroll animation"
+  default_prompt: "Use $scroll-motion to implement this scroll-driven animation with the smallest suitable technology."

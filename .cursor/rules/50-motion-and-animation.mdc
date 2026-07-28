@@ -1,0 +1,21 @@
+---
+description: Motion design, animation, transitions, gestures, scroll effects, GSAP, Motion, Framer Motion, SVG animation, and animated interface requirements
+alwaysApply: false
+---
+
+# Motion and animation
+
+- Define the purpose of each animation: orientation, feedback, hierarchy, continuity, or storytelling. Remove motion that has no user benefit.
+- Use CSS transitions for simple hover, focus, and state changes; a component motion library for enter/exit, gesture, and layout animation; and GSAP-style timelines for complex sequencing, SVG, or deliberate scroll storytelling.
+- Do not let multiple animation systems control the same element or transform.
+- Prefer `transform` and `opacity`. Avoid frequent animation of layout-triggering properties such as `top`, `left`, `width`, and `height` unless profiling proves it is safe.
+- Centralize durations, easing curves, distances, and spring settings as motion tokens. Use consistent timing instead of arbitrary values on every component.
+- Keep frequent micro-interactions quick and subtle. Reserve longer sequences for deliberate narrative moments and make them interruptible.
+- Respect `prefers-reduced-motion`. Remove parallax, large movement, zoom, continuous motion, and scroll-linked effects for reduced-motion users; use a minimal opacity change or no animation.
+- Never hijack scrolling, block navigation until an animation completes, autoplay audio, or hide required information behind hover-only effects.
+- Pause or stop off-screen and background animation. Avoid unbounded loops and excessive simultaneous effects.
+- Initialize animations only after their targets exist. Clean up timelines, observers, requestAnimationFrame loops, timers, and event listeners when components unmount or routes change.
+- Test animation with keyboard input, touch input, slow devices, resize, route changes, interrupted interactions, and reduced-motion settings.
+- Profile complex motion in the browser. Check for dropped frames, long main-thread tasks, layout thrashing, cumulative layout shift, and memory leaks.
+- Verify that content remains understandable and usable when animation is disabled.
+

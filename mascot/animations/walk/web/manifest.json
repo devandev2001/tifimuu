@@ -1,0 +1,88 @@
+{
+  "canvas_size": [
+    369,
+    640
+  ],
+  "frames": {
+    "walk_00": {
+      "name": "walk_00",
+      "file": "walk_00.png",
+      "size": [
+        369,
+        640
+      ]
+    },
+    "walk_01": {
+      "name": "walk_01",
+      "file": "walk_01.png",
+      "size": [
+        369,
+        640
+      ]
+    },
+    "walk_02": {
+      "name": "walk_02",
+      "file": "walk_02.png",
+      "size": [
+        369,
+        640
+      ]
+    },
+    "walk_03": {
+      "name": "walk_03",
+      "file": "walk_03.png",
+      "size": [
+        369,
+        640
+      ]
+    },
+    "walk_04": {
+      "name": "walk_04",
+      "file": "walk_04.png",
+      "size": [
+        369,
+        640
+      ]
+    },
+    "walk_05": {
+      "name": "walk_05",
+      "file": "walk_05.png",
+      "size": [
+        369,
+        640
+      ]
+    },
+    "walk_06": {
+      "name": "walk_06",
+      "file": "walk_06.png",
+      "size": [
+        369,
+        640
+      ]
+    },
+    "walk_07": {
+      "name": "walk_07",
+      "file": "walk_07.png",
+      "size": [
+        369,
+        640
+      ]
+    }
+  },
+  "animations": {
+    "Walk": {
+      "sequence": [
+        "walk_00",
+        "walk_01",
+        "walk_02",
+        "walk_03",
+        "walk_04",
+        "walk_05",
+        "walk_06",
+        "walk_07"
+      ],
+      "fps": 12,
+      "loop": true
+    }
+  }
+}

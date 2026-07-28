@@ -1,0 +1,388 @@
+{
+  "assembly_canvas": {
+    "width": 452,
+    "height": 900
+  },
+  "parts": {
+    "hair_back": {
+      "name": "hair_back",
+      "zOrder": 35,
+      "position": [
+        155.0,
+        160.0
+      ],
+      "size": [
+        162,
+        272
+      ],
+      "source_bbox_in_char_crop": [
+        74,
+        24,
+        236,
+        296
+      ],
+      "png_preview": "hair_back.png"
+    },
+    "torso": {
+      "name": "torso",
+      "zOrder": 40,
+      "position": [
+        192.5,
+        330.0
+      ],
+      "size": [
+        227,
+        332
+      ],
+      "source_bbox_in_char_crop": [
+        79,
+        164,
+        306,
+        496
+      ],
+      "png_preview": "torso.png"
+    },
+    "apron": {
+      "name": "apron",
+      "zOrder": 42,
+      "position": [
+        190.0,
+        385.0
+      ],
+      "size": [
+        212,
+        302
+      ],
+      "source_bbox_in_char_crop": [
+        84,
+        234,
+        296,
+        536
+      ],
+      "png_preview": "apron.png"
+    },
+    "waist_tie": {
+      "name": "waist_tie",
+      "zOrder": 43,
+      "position": [
+        185.0,
+        470.0
+      ],
+      "size": [
+        222,
+        132
+      ],
+      "source_bbox_in_char_crop": [
+        74,
+        404,
+        296,
+        536
+      ],
+      "png_preview": "waist_tie.png"
+    },
+    "neck": {
+      "name": "neck",
+      "zOrder": 45,
+      "position": [
+        210.0,
+        200.0
+      ],
+      "size": [
+        112,
+        92
+      ],
+      "source_bbox_in_char_crop": [
+        154,
+        154,
+        266,
+        246
+      ],
+      "png_preview": "neck.png"
+    },
+    "head": {
+      "name": "head",
+      "zOrder": 50,
+      "position": [
+        215.0,
+        108.0
+      ],
+      "size": [
+        202,
+        216
+      ],
+      "source_bbox_in_char_crop": [
+        114,
+        0,
+        316,
+        216
+      ],
+      "png_preview": "head.png"
+    },
+    "hair_front": {
+      "name": "hair_front",
+      "zOrder": 55,
+      "position": [
+        250.0,
+        100.0
+      ],
+      "size": [
+        172,
+        192
+      ],
+      "source_bbox_in_char_crop": [
+        164,
+        4,
+        336,
+        196
+      ],
+      "png_preview": "hair_front.png"
+    },
+    "right_upper_arm": {
+      "name": "right_upper_arm",
+      "zOrder": 29,
+      "position": [
+        110.0,
+        290.0
+      ],
+      "size": [
+        142,
+        172
+      ],
+      "source_bbox_in_char_crop": [
+        39,
+        204,
+        181,
+        376
+      ],
+      "png_preview": "right_upper_arm.png"
+    },
+    "right_forearm": {
+      "name": "right_forearm",
+      "zOrder": 28,
+      "position": [
+        97.5,
+        395.0
+      ],
+      "size": [
+        137,
+        182
+      ],
+      "source_bbox_in_char_crop": [
+        29,
+        304,
+        166,
+        486
+      ],
+      "png_preview": "right_forearm.png"
+    },
+    "right_hand": {
+      "name": "right_hand",
+      "zOrder": 27,
+      "position": [
+        95.0,
+        475.0
+      ],
+      "size": [
+        122,
+        122
+      ],
+      "source_bbox_in_char_crop": [
+        34,
+        414,
+        156,
+        536
+      ],
+      "png_preview": "right_hand.png"
+    },
+    "tiffin": {
+      "name": "tiffin",
+      "zOrder": 24,
+      "position": [
+        107.5,
+        530.0
+      ],
+      "size": [
+        157,
+        252
+      ],
+      "source_bbox_in_char_crop": [
+        29,
+        404,
+        186,
+        656
+      ],
+      "png_preview": "tiffin.png"
+    },
+    "left_upper_arm": {
+      "name": "left_upper_arm",
+      "zOrder": 47,
+      "position": [
+        207.5,
+        295.0
+      ],
+      "size": [
+        137,
+        162
+      ],
+      "source_bbox_in_char_crop": [
+        139,
+        214,
+        276,
+        376
+      ],
+      "png_preview": "left_upper_arm.png"
+    },
+    "left_forearm": {
+      "name": "left_forearm",
+      "zOrder": 48,
+      "position": [
+        245.0,
+        365.0
+      ],
+      "size": [
+        122,
+        162
+      ],
+      "source_bbox_in_char_crop": [
+        184,
+        284,
+        306,
+        446
+      ],
+      "png_preview": "left_forearm.png"
+    },
+    "left_hand": {
+      "name": "left_hand",
+      "zOrder": 49,
+      "position": [
+        265.0,
+        420.0
+      ],
+      "size": [
+        102,
+        112
+      ],
+      "source_bbox_in_char_crop": [
+        214,
+        364,
+        316,
+        476
+      ],
+      "png_preview": "left_hand.png"
+    },
+    "shopping_bag": {
+      "name": "shopping_bag",
+      "zOrder": 56,
+      "position": [
+        315.0,
+        475.0
+      ],
+      "size": [
+        192,
+        362
+      ],
+      "source_bbox_in_char_crop": [
+        219,
+        294,
+        411,
+        656
+      ],
+      "png_preview": "shopping_bag.png"
+    },
+    "right_thigh": {
+      "name": "right_thigh",
+      "zOrder": 32,
+      "position": [
+        265.0,
+        595.0
+      ],
+      "size": [
+        212,
+        262
+      ],
+      "source_bbox_in_char_crop": [
+        159,
+        464,
+        371,
+        726
+      ],
+      "png_preview": "right_thigh.png"
+    },
+    "right_shin": {
+      "name": "right_shin",
+      "zOrder": 30,
+      "position": [
+        320.0,
+        777.0
+      ],
+      "size": [
+        212,
+        246
+      ],
+      "source_bbox_in_char_crop": [
+        214,
+        654,
+        426,
+        900
+      ],
+      "png_preview": "right_shin.png"
+    },
+    "left_thigh": {
+      "name": "left_thigh",
+      "zOrder": 44,
+      "position": [
+        117.5,
+        605.0
+      ],
+      "size": [
+        217,
+        282
+      ],
+      "source_bbox_in_char_crop": [
+        9,
+        464,
+        226,
+        746
+      ],
+      "png_preview": "left_thigh.png"
+    },
+    "left_shin": {
+      "name": "left_shin",
+      "zOrder": 46,
+      "position": [
+        108.0,
+        782.0
+      ],
+      "size": [
+        216,
+        236
+      ],
+      "source_bbox_in_char_crop": [
+        0,
+        664,
+        216,
+        900
+      ],
+      "png_preview": "left_shin.png"
+    },
+    "shadow": {
+      "name": "shadow",
+      "zOrder": 1,
+      "position": [
+        210.0,
+        868.0
+      ],
+      "size": [
+        280,
+        48
+      ],
+      "source_bbox_in_char_crop": [
+        70,
+        844,
+        350,
+        892
+      ],
+      "png_preview": "shadow.png"
+    }
+  }
+}

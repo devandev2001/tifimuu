@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build 3D Web Experience"
+  short_description: "Build fast, accessible animated 3D websites"
+  default_prompt: "Use $build-3d-web-experience to plan and implement a performant, accessible 3D web experience."

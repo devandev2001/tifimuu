@@ -1,0 +1,500 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Brand palette — forest / mint / cream / white / tan (logo-derived). */
+  --color-forest: #2c4a27;
+  --color-forest-deep: #1e3419;
+  --color-olive: #5d7a3f;
+  --color-mint: #dff0b8;
+  --color-pistachio: #cbe897;
+  --color-lime: #ccea94;
+  --color-lime-bright: #ddf5ab;
+  --color-cream: #faf6ea;
+  --color-tan: #d9c29a;
+  --color-ink: #22301f;
+
+  /* Motion tokens — CSS source of truth; mirrored in src/lib/motion.ts. */
+  --motion-duration-instant: 80ms;
+  --motion-duration-fast: 160ms;
+  --motion-duration-base: 240ms;
+  --motion-duration-slow: 400ms;
+  --motion-duration-narrative: 700ms;
+
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-enter: cubic-bezier(0, 0, 0, 1);
+  --motion-ease-exit: cubic-bezier(0.3, 0, 1, 1);
+  --motion-ease-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
+
+  --motion-distance-xs: 4px;
+  --motion-distance-sm: 8px;
+  --motion-distance-md: 16px;
+  --motion-distance-lg: 32px;
+
+  --motion-stagger-fast: 40ms;
+  --motion-stagger-base: 80ms;
+
+  /* shadcn tokens remapped to logo greens (cream / forest / mint / lime). */
+  --background: var(--color-cream);
+  --foreground: var(--color-ink);
+  --card: #ffffff;
+  --card-foreground: var(--color-ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-forest);
+  --primary-foreground: var(--color-cream);
+  --secondary: var(--color-mint);
+  --secondary-foreground: var(--color-forest-deep);
+  --muted: var(--color-mint);
+  --muted-foreground: color-mix(in srgb, var(--color-ink) 65%, transparent);
+  --accent: var(--color-lime);
+  --accent-foreground: var(--color-forest-deep);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: color-mix(in srgb, var(--color-forest) 14%, transparent);
+  --input: color-mix(in srgb, var(--color-forest) 18%, transparent);
+  --ring: var(--color-olive);
+  --chart-1: var(--color-forest);
+  --chart-2: var(--color-olive);
+  --chart-3: var(--color-pistachio);
+  --chart-4: var(--color-tan);
+  --chart-5: var(--color-lime);
+  --radius: 1rem;
+  --sidebar: var(--color-cream);
+  --sidebar-foreground: var(--color-ink);
+  --sidebar-primary: var(--color-forest);
+  --sidebar-primary-foreground: var(--color-cream);
+  --sidebar-accent: var(--color-mint);
+  --sidebar-accent-foreground: var(--color-forest-deep);
+  --sidebar-border: color-mix(in srgb, var(--color-forest) 14%, transparent);
+  --sidebar-ring: var(--color-olive);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-forest: var(--color-forest);
+  --color-forest-deep: var(--color-forest-deep);
+  --color-olive: var(--color-olive);
+  --color-mint: var(--color-mint);
+  --color-pistachio: var(--color-pistachio);
+  --color-lime: var(--color-lime);
+  --color-lime-bright: var(--color-lime-bright);
+  --color-cream: var(--color-cream);
+  --color-tan: var(--color-tan);
+  --color-ink: var(--color-ink);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-baloo);
+  --font-heading: var(--font-baloo);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-distance-xs: 0px;
+    --motion-distance-sm: 0px;
+    --motion-distance-md: 0px;
+    --motion-distance-lg: 0px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .mascot-idle,
+  .mascot-idle--playful {
+    animation: none !important;
+  }
+
+  .floating-panel-image,
+  .floating-site-orb,
+  .floating-site-orb-slow {
+    animation: none !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), "Nunito", sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-pistachio) 70%, white);
+  color: var(--color-forest-deep);
+}
+
+/* Continuous idle motion for PNG mascots (CSS owns the transform). */
+.mascot-idle {
+  transform-origin: 50% 85%;
+  animation:
+    mascot-bob 3.2s var(--motion-ease-emphasized) infinite alternate,
+    mascot-sway 4.6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.mascot-idle--playful {
+  animation:
+    mascot-bob 2.4s var(--motion-ease-emphasized) infinite alternate,
+    mascot-sway 3.4s ease-in-out infinite alternate;
+}
+
+@keyframes mascot-bob {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes mascot-sway {
+  from {
+    rotate: -2.2deg;
+  }
+  to {
+    rotate: 2.2deg;
+  }
+}
+
+/* Floating landing — soft bob on the plate + drifting atmosphere orbs. */
+.floating-panel-image {
+  animation: floating-panel-bob 5.6s var(--motion-ease-emphasized) infinite
+    alternate;
+  will-change: transform;
+}
+
+.floating-site-orb {
+  animation: floating-orb-drift 9s ease-in-out infinite alternate;
+}
+
+.floating-site-orb-slow {
+  animation: floating-orb-drift 14s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floating-panel-bob {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -14px;
+  }
+}
+
+@keyframes floating-orb-drift {
+  from {
+    translate: 0 0;
+    opacity: 0.55;
+  }
+  to {
+    translate: 12px -18px;
+    opacity: 0.9;
+  }
+}
+
+/* Soft steam wisps for the About cook reveal (GSAP owns opacity / travel). */
+.cook-steam-wisp {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(255 255 255 / 0.55) 0%,
+    rgb(220 235 180 / 0.25) 45%,
+    transparent 72%
+  );
+  filter: blur(2px);
+  will-change: transform, opacity;
+}
+
+.cook-steam-wisp--a {
+  left: 18%;
+  bottom: 8%;
+  width: 42%;
+  height: 70%;
+}
+
+.cook-steam-wisp--b {
+  left: 40%;
+  bottom: 0;
+  width: 36%;
+  height: 78%;
+}
+
+.cook-steam-wisp--c {
+  left: 58%;
+  bottom: 12%;
+  width: 30%;
+  height: 62%;
+}
+
+/* Scroll-in reveal. Hide only when scripting is available so no-JS
+   visitors always see content — no inline <script> / hydration risk. */
+@media (scripting: enabled) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(var(--motion-distance-lg));
+    transition:
+      opacity var(--motion-duration-slow) var(--motion-ease-enter),
+      transform var(--motion-duration-slow) var(--motion-ease-enter);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+:focus-visible {
+  outline-color: var(--color-forest);
+}
+
+/* Soft film grain for the splash stage — CSS only, no image asset. */
+.splash-grain {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(34 48 31 / 0.045) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 60%, rgb(34 48 31 / 0.035) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 40% 80%, rgb(34 48 31 / 0.03) 0 1px, transparent 1.5px);
+  background-size:
+    3px 3px,
+    5px 5px,
+    4px 4px;
+  mix-blend-mode: multiply;
+}
+
+.splash-atmosphere {
+  background:
+    radial-gradient(ellipse at 50% 40%, var(--color-cream) 0%, transparent 45%),
+    linear-gradient(165deg, var(--color-lime) 0%, var(--color-pistachio) 100%);
+}
+
+.hero-atmosphere {
+  background:
+    radial-gradient(ellipse at 78% 42%, var(--color-cream) 0%, transparent 42%),
+    radial-gradient(ellipse at 12% 88%, var(--color-mint) 0%, transparent 48%),
+    linear-gradient(
+      165deg,
+      var(--color-lime) 0%,
+      var(--color-pistachio) 55%,
+      var(--color-mint) 100%
+    );
+}
+
+/* SplineScene Suspense fallback spinner */
+.loader {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid color-mix(in srgb, var(--color-cream) 35%, transparent);
+  border-top-color: var(--color-lime);
+  border-radius: 50%;
+  animation: loader-spin 0.7s linear infinite;
+}
+
+@keyframes loader-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-grain {
+    opacity: 0.15;
+  }
+
+  .loader {
+    animation: none;
+    border-top-color: var(--color-cream);
+  }
+
+  .today-special-pulse,
+  .border-trail {
+    animation: none !important;
+  }
+}
+
+/* Today's menu card — gentle pulse, not a neon promo. */
+.today-special-pulse {
+  animation: today-special-glow 2.8s var(--motion-ease-emphasized) infinite
+    alternate;
+}
+
+@keyframes today-special-glow {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-forest) 0%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-lime) 55%, transparent);
+  }
+}
+
+/* Hover lift for interactive surfaces (CSS-owned transform). */
+.hover-lift {
+  transition:
+    transform var(--motion-duration-fast) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.hover-lift:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+/* Border trail for menu / plan tiles. */
+.border-trail {
+  opacity: 0.55;
+  background: conic-gradient(
+    from var(--border-trail-angle, 0deg),
+    transparent 0%,
+    var(--color-lime) 12%,
+    transparent 28%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 2px;
+  animation: border-trail-spin 3.2s linear infinite;
+}
+
+@property --border-trail-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes border-trail-spin {
+  to {
+    --border-trail-angle: 360deg;
+  }
+}
+
+.nav-link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size var(--motion-duration-base) var(--motion-ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link-draw:hover {
+    background-size: 100% 2px;
+  }
+}
+
+.nav-link-draw:focus-visible {
+  background-size: 100% 2px;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

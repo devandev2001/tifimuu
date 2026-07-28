@@ -1,0 +1,4 @@
+interface:
+  display_name: "Motion Tokens"
+  short_description: "Create consistent reusable motion design tokens"
+  default_prompt: "Use $motion-tokens to define or apply the project motion token system consistently."

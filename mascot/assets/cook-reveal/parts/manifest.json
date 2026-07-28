@@ -1,0 +1,77 @@
+{
+  "assembly_canvas": {
+    "width": 864,
+    "height": 1024
+  },
+  "parts": {
+    "body": {
+      "name": "body",
+      "file": "body.png",
+      "position": [
+        432.0,
+        512.0
+      ],
+      "size": [
+        864,
+        1024
+      ],
+      "zOrder": 1,
+      "source_bbox_in_char_crop": [
+        0,
+        0,
+        864,
+        1024
+      ],
+      "pivot": [
+        432.0,
+        634.88
+      ]
+    },
+    "head": {
+      "name": "head",
+      "file": "head.png",
+      "position": [
+        515.0,
+        287.5
+      ],
+      "size": [
+        514,
+        319
+      ],
+      "zOrder": 3,
+      "source_bbox_in_char_crop": [
+        258,
+        128,
+        772,
+        447
+      ],
+      "pivot": [
+        430,
+        400
+      ]
+    },
+    "lid": {
+      "name": "lid",
+      "file": "lid.png",
+      "position": [
+        677.0,
+        450.0
+      ],
+      "size": [
+        288,
+        374
+      ],
+      "zOrder": 4,
+      "source_bbox_in_char_crop": [
+        533,
+        263,
+        821,
+        637
+      ],
+      "pivot": [
+        553,
+        450.0
+      ]
+    }
+  }
+}

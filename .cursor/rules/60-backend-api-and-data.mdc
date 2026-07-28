@@ -1,0 +1,24 @@
+---
+description: Backend architecture, API routes, server actions, database schema, migrations, queues, caching, and frontend-backend contract requirements
+alwaysApply: false
+---
+
+# Backend, API, and data
+
+- Define the contract before implementation: typed input, typed output, validation schema, authentication, authorization, errors, and side effects.
+- Keep transport handlers thin. Separate request parsing, business rules, data access, and third-party integrations into focused modules.
+- Use one consistent structured error shape. Map errors to appropriate status codes and never leak internal details.
+- Validate external input and third-party responses at boundaries. After validation, pass typed values through internal layers.
+- Design REST resources with predictable plural nouns and standard methods, or follow the project's established API style. Avoid action verbs and inconsistent response envelopes.
+- Paginate unbounded collections and cap page sizes. Validate filters and sort keys against allowlists.
+- Avoid breaking public contracts. Prefer additive optional fields; document and deliberately migrate any incompatible change.
+- Enforce data integrity in the database with appropriate types, constraints, unique indexes, foreign keys, and transactions, not only application checks.
+- Make migrations reviewable, reversible when practical, and safe for existing data. Separate risky schema changes into expand, backfill, switch, and contract stages.
+- Never run a destructive migration or production data change without explicit approval, a verified backup or recovery plan, and a rollback strategy.
+- Prevent N+1 queries, unbounded reads, and repeated remote calls. Add indexes based on real query patterns and verify with measurement.
+- Use bounded timeouts, retries with backoff and jitter, and circuit-breaking or graceful degradation where external dependencies can fail. Never retry non-idempotent work blindly.
+- Make webhook, payment, job, and retryable mutation handlers idempotent. Verify signatures and protect against replay where supported.
+- Keep server-only code, credentials, and privileged data out of client bundles. Return the minimum data the UI requires.
+- For background jobs, define ownership, retry limits, dead-letter handling, observability, and safe reprocessing.
+- Add contract or integration tests for API and database boundaries, including unauthorized, forbidden, invalid, missing, conflict, and dependency-failure cases.
+

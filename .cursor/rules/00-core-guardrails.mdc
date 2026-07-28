@@ -1,0 +1,17 @@
+---
+alwaysApply: true
+---
+
+# Core project guardrails
+
+- Assume the user is not a programmer. Explain important choices, risks, and verification results in plain language.
+- Before coding, inspect the repository, package manager, lockfile, framework, configuration, existing components, tests, and conventions. Do not guess the stack or invent commands.
+- For a new application, define the smallest coherent architecture and critical user flows before generating many files. Prefer a working vertical slice over a large unfinished scaffold.
+- Keep changes small, focused, and reversible. Preserve unrelated work and existing behavior unless the requested change explicitly replaces it.
+- Ask for explicit approval before destructive database operations, production deployments, paid-service provisioning, authentication changes, permission changes, secret rotation, or irreversible external actions.
+- Never claim code is perfect, secure, complete, or error-free. Report evidence: commands run, tests passed, browser checks performed, and anything still unverified.
+- Never claim a command or test passed unless it was actually run and its result inspected.
+- Do not hide failures with fallbacks, disabled checks, ignored errors, skipped tests, broad type casts, or placeholder implementations.
+- Use current official documentation when behavior depends on a changing framework, library, API, browser feature, security practice, or deployment platform.
+- Finish each coding task by reviewing the diff, removing accidental artifacts, and summarizing what changed, why, how it was verified, and any remaining risk.
+
