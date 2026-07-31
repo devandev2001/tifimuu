@@ -7,6 +7,7 @@ import {
   TextAreaField,
   TextField,
 } from "@/components/admin/AdminFields";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { useSiteContent } from "@/components/content/ContentProvider";
 import type { DayMenu } from "@/lib/menu";
 
@@ -46,7 +47,7 @@ export default function AdminMenuPage() {
     <div className="space-y-5">
       <AdminSection
         title="Weekly menu"
-        description="Edit each day’s meal. Image paths point to files in the public folder for now."
+        description="Edit each day’s meal. Upload photos here, or keep an existing path."
       >
         <div className="flex flex-wrap gap-2">
           {draft.map((entry) => (
@@ -100,13 +101,12 @@ export default function AdminMenuPage() {
           />
           Six-day plan only
         </label>
-        <TextField
+        <ImageUploadField
           id="day-meal-image"
-          label="Meal image path"
+          label="Meal photo"
+          folder="meals"
           value={day.mealImage}
-          onChange={(event) =>
-            patch({ ...day, mealImage: event.target.value })
-          }
+          onChange={(next) => patch({ ...day, mealImage: next })}
         />
         <TextAreaField
           id="day-staples"
@@ -157,14 +157,15 @@ export default function AdminMenuPage() {
             })
           }
         />
-        <TextField
+        <ImageUploadField
           id="day-dessert-image"
-          label="Dessert image path"
+          label="Dessert photo"
+          folder="desserts"
           value={day.dessertImage ?? ""}
-          onChange={(event) =>
+          onChange={(next) =>
             patch({
               ...day,
-              dessertImage: event.target.value.trim() || null,
+              dessertImage: next.trim() || null,
             })
           }
         />

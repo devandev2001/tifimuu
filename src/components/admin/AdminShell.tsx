@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useSiteContent } from "@/components/content/ContentProvider";
+import { createClient } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 
 const NAV = [
   { href: "/admin", label: "Overview", exact: true },
@@ -15,7 +17,22 @@ const NAV = [
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { ready, saving, error, reset } = useSiteContent();
+  const supabaseEnabled = isSupabaseConfigured();
+
+  // Login page has its own layout chrome.
+  if (pathname === "/admin/login") {
+    return <>{children}</>;
+  }
+
+  async function signOut() {
+    if (!supabaseEnabled) return;
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.replace("/admin/login");
+    router.refresh();
+  }
 
   return (
     <div className="min-h-svh bg-cream text-ink">
@@ -28,6 +45,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <h1 className="font-display text-2xl font-extrabold text-forest">
               Edit your website
             </h1>
+            <p className="mt-1 text-xs font-semibold text-olive">
+              {supabaseEnabled
+                ? "Saving to Supabase"
+                : "Saving on this computer only (local mode)"}
+            </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Link
@@ -36,6 +58,15 @@ export function AdminShell({ children }: { children: ReactNode }) {
             >
               View website
             </Link>
+            {supabaseEnabled ? (
+              <button
+                type="button"
+                onClick={() => void signOut()}
+                className="inline-flex min-h-11 items-center rounded-full border border-forest/15 px-4 font-semibold text-forest hover:bg-mint/40"
+              >
+                Sign out
+              </button>
+            ) : null}
             <button
               type="button"
               disabled={saving || !ready}

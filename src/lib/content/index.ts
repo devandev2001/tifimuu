@@ -8,6 +8,7 @@ export {
   createHttpContentRepository,
   createLocalContentRepository,
   getContentRepository,
+  isSiteContent,
 } from "./repository";
 
 export async function loadSiteContent(): Promise<SiteContent> {

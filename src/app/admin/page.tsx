@@ -38,9 +38,10 @@ export default function AdminOverviewPage() {
           Welcome to your control panel
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-olive sm:text-base">
-          Change website text and details here. Saves stay on this computer for
-          now. When you add a backend later, we can plug these same screens into
-          your real database — no redesign needed.
+          Change website text and details here. When Supabase keys are set in{" "}
+          <code className="rounded bg-mint/50 px-1">.env.local</code>, saves go
+          to your cloud database. Without those keys, edits stay on this
+          computer only.
         </p>
         <dl className="mt-5 grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl bg-mint/40 px-4 py-3">
@@ -69,8 +70,14 @@ export default function AdminOverviewPage() {
           </div>
         </dl>
         <p className="mt-4 rounded-xl border border-amber-200/80 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-          <strong className="font-bold">Note:</strong> there is no password yet.
-          Add login when you connect the backend so only you can edit.
+          <strong className="font-bold">Setup:</strong> create a Supabase
+          project, run the SQL migration, add your keys to{" "}
+          <code className="rounded bg-white/80 px-1">.env.local</code>, then
+          sign in at{" "}
+          <Link href="/admin/login" className="font-bold underline">
+            /admin/login
+          </Link>
+          .
         </p>
       </section>
 

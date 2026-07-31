@@ -7,6 +7,7 @@ import {
   TextAreaField,
   TextField,
 } from "@/components/admin/AdminFields";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { useSiteContent } from "@/components/content/ContentProvider";
 import type { LandingPanel, LandingPanelId } from "@/lib/landing-panels";
 
@@ -99,15 +100,16 @@ export default function AdminPanelsPage() {
           value={panel.body}
           onChange={(event) => patch({ ...panel, body: event.target.value })}
         />
-        <TextField
+        <ImageUploadField
           id="panel-image"
-          label="Image path"
-          hint="Example: /menu/meals/tuesday-pulao.jpg"
+          label="Panel photo"
+          folder="panels"
+          hint="Upload a photo for this slide, or paste a path/URL."
           value={panel.image.src}
-          onChange={(event) =>
+          onChange={(next) =>
             patch({
               ...panel,
-              image: { ...panel.image, src: event.target.value },
+              image: { ...panel.image, src: next },
             })
           }
         />

@@ -1,3 +1,4 @@
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createDefaultSiteContent } from "./defaults";
 import type { ContentRepository, SiteContent } from "./types";
 
@@ -7,7 +8,7 @@ function cloneContent(content: SiteContent): SiteContent {
   return structuredClone(content);
 }
 
-function isSiteContent(value: unknown): value is SiteContent {
+export function isSiteContent(value: unknown): value is SiteContent {
   if (!value || typeof value !== "object") return false;
   const record = value as Record<string, unknown>;
   return (
@@ -75,7 +76,10 @@ export function createHttpContentRepository(
 ): ContentRepository {
   return {
     async load() {
-      const response = await fetch(baseUrl, { cache: "no-store" });
+      const response = await fetch(baseUrl, {
+        cache: "no-store",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(`Failed to load content (${response.status})`);
       }
@@ -90,6 +94,7 @@ export function createHttpContentRepository(
       const response = await fetch(baseUrl, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(content),
       });
       if (!response.ok) {
@@ -103,7 +108,10 @@ export function createHttpContentRepository(
     },
 
     async reset() {
-      const response = await fetch(`${baseUrl}/reset`, { method: "POST" });
+      const response = await fetch(`${baseUrl}/reset`, {
+        method: "POST",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(`Failed to reset content (${response.status})`);
       }
@@ -116,7 +124,12 @@ export function createHttpContentRepository(
   };
 }
 
-/** Single switch for later: change this to createHttpContentRepository(). */
+/**
+ * Uses Supabase-backed HTTP API when configured; otherwise browser localStorage.
+ */
 export function getContentRepository(): ContentRepository {
+  if (isSupabaseConfigured()) {
+    return createHttpContentRepository();
+  }
   return createLocalContentRepository();
 }
