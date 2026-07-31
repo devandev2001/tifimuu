@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useSiteContent } from "@/components/content/ContentProvider";
 
 const LINKS = [
@@ -28,6 +29,12 @@ const LINKS = [
 
 export default function AdminOverviewPage() {
   const { content, ready } = useSiteContent();
+  const [savedLabel, setSavedLabel] = useState<string>("…");
+
+  useEffect(() => {
+    // Format on the client only to avoid server/client locale hydration mismatch.
+    setSavedLabel(new Date(content.updatedAt).toLocaleString());
+  }, [content.updatedAt]);
 
   if (!ready) return null;
 
@@ -65,7 +72,7 @@ export default function AdminOverviewPage() {
               Last saved
             </dt>
             <dd className="mt-1 text-sm font-semibold text-forest">
-              {new Date(content.updatedAt).toLocaleString()}
+              {savedLabel}
             </dd>
           </div>
         </dl>
@@ -91,7 +98,7 @@ export default function AdminOverviewPage() {
             <h3 className="font-display text-xl font-extrabold text-forest">
               {link.title}
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-olive">{link.body}</p>
+            <p className="mt-2 text-sm text-olive">{link.body}</p>
           </Link>
         ))}
       </div>

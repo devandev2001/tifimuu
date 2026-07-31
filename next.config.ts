@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Smaller Node deploy for Hostinger SSR / Web Apps hosting.
-  output: "standalone",
+  // Do NOT set output: "standalone" for Vercel — Vercel runs Next.js natively.
+  // Use standalone only for self-hosted Node (e.g. Hostinger VPS) if needed later.
   images: {
     remotePatterns: [
       {
