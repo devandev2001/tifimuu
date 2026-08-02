@@ -1,7 +1,13 @@
-import { FloatingSite } from "@/components/floating-site/FloatingSite";
-import { FloatingSiteProvider } from "@/components/floating-site/FloatingSiteProvider";
+import { About } from "@/components/about/About";
+import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { PolyHero } from "@/components/hero/PolyHero";
+import { HowItWorks } from "@/components/how-it-works/HowItWorks";
+import { WeeklyMenu } from "@/components/menu/WeeklyMenu";
+import { OrderContact } from "@/components/order/OrderContact";
+import { Plans } from "@/components/plans/Plans";
 import { SiteChrome } from "@/components/SiteChrome";
+import { WhyTiffimu } from "@/components/why/WhyTiffimu";
 
 export default function Home() {
   return (
@@ -12,14 +18,23 @@ export default function Home() {
       >
         Skip to content
       </a>
-      <FloatingSiteProvider>
-        <div data-enter="header">
-          <Header />
+      <div data-enter="header">
+        <Header />
+      </div>
+      <main id="main">
+        <PolyHero />
+        <div data-enter="rest">
+          <WhyTiffimu />
+          <HowItWorks />
+          <WeeklyMenu />
+          <Plans />
+          <About />
+          <OrderContact />
         </div>
-        <main id="main">
-          <FloatingSite />
-        </main>
-      </FloatingSiteProvider>
+      </main>
+      <div data-enter="rest">
+        <Footer />
+      </div>
     </SiteChrome>
   );
 }

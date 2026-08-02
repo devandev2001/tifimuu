@@ -37,6 +37,24 @@ export const motionSprings = {
   magnetic: { type: "spring" as const, stiffness: 260, damping: 18, mass: 0.4 },
 } as const;
 
+/**
+ * Floating landing panel carousel — vertical story slides.
+ * Tuned for wheel/swipe: long ease-out, partial overlap, soft scale.
+ */
+export const floatingPanelMotion = {
+  duration: 0.92,
+  /** cubic-bezier(0.22, 1, 0.36, 1) — smooth decelerate into place */
+  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+  /** Incoming panel travel as % of viewport height */
+  enterY: 78,
+  /** Outgoing panel travel as % of viewport height */
+  exitY: 42,
+  enterScale: 0.94,
+  exitScale: 0.97,
+  /** Wheel distance before advancing a panel */
+  wheelThreshold: 58,
+} as const;
+
 /** 3D hero tuning: one owner (useFrame) for every scene transform. */
 export const tiffinMotion = {
   idleSpinRadPerSec: 0.35,
@@ -76,6 +94,16 @@ export const splashMotion = {
   imageReadyFallbackMs: 2200,
   letterStagger: 0.045,
   taglineStagger: 0.028,
+  /** Video intro (`/videos/mascot-walk-intro.mp4`, ~4s). */
+  videoSrc: "/videos/mascot-walk-intro.mp4",
+  /** Wordmark appears once she has walked into view. */
+  videoWordmarkAt: 1.05,
+  /** Tagline follows shortly after the wordmark. */
+  videoTaglineAt: 1.85,
+  /** Hold the lockup before dissolving into the site. */
+  videoHoldAfterTagline: 1.05,
+  /** Fallback if the video never fires `ended` (phones can stall). */
+  videoFallbackMs: 4200,
 } as const;
 
 /** Off-screen start for the splash walker (pixels left of rest position). */
