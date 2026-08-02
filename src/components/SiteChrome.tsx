@@ -11,7 +11,7 @@ function unlockPageScroll() {
 }
 
 /**
- * Video opening splash, then a normal continuously scrolling page.
+ * Video opening splash, then the floating-panel homepage.
  */
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const [playEntrance, setPlayEntrance] = useState(false);

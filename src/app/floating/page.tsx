@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-/** Legacy route — homepage is the continuous scroll experience. */
+/** Legacy preview — main homepage is the floating panel experience. */
 export default function FloatingPreviewPage() {
   redirect("/");
 }
