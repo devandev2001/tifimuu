@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   title: "Tiffimu — Tiffin Made For You",
   description:
     "Fresh, home-style Indian comfort meals delivered across Kuwait. Pick a 5-day or 6-day tiffin plan and order in one WhatsApp message.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [{ url: "/icon.png" }],
+  },
   openGraph: {
     title: "Tiffimu — Tiffin Made For You",
     description:
@@ -38,7 +45,6 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-scroll-behavior="smooth"
       className={cn("antialiased", baloo.variable, nunito.variable)}
     >
       <body>
